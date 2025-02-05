@@ -154,14 +154,16 @@ echo "# TROPOMI/blended processor version(s): ${TROPOMI_PROCESSOR_VERSION}" >>"$
 
 # Download TROPOMI or blended dataset from AWS
 tropomiCache=${RunDirs}/satellite_data
+
+if "$BlendedTROPOMI"; then
+    downloadScript=src/utilities/download_blended_TROPOMI.py
+else
+    downloadScript=src/utilities/download_TROPOMI.py
+fi
+
 if "$isAWS"; then
     mkdir -p -v $tropomiCache
 
-    if "$BlendedTROPOMI"; then
-        downloadScript=src/utilities/download_blended_TROPOMI.py
-    else
-        downloadScript=src/utilities/download_TROPOMI.py
-    fi
     sbatch --mem $RequestedMemory \
         -c $RequestedCPUs \
         -t $RequestedTime \
@@ -177,6 +179,12 @@ else
     if [[ ! -L $tropomiCache ]]; then
         ln -s $DataPathTROPOMI $tropomiCache
     fi
+
+    python src/utilities/check_tropomi_download.py $tropomiCache $downloadScript $StartDate $EndDate || download=$?
+
+    if [ $download != 0 ]; then
+    	python $downloadScript $StartDate $EndDate $tropomiCache
+	fi
 fi
 
 # Check to make sure there are no duplicate TROPOMI files (e.g., two files with the same orbit number but a different processor version)
