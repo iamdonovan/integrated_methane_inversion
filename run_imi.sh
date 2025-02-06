@@ -184,6 +184,8 @@ else
 
     if [ $download != 0 ]; then
     	python $downloadScript $StartDate $EndDate $tropomiCache
+	else
+		echo "All required TROPOMI files have been downloaded."
 	fi
 fi
 
