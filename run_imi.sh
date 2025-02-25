@@ -182,7 +182,7 @@ else
 
     python src/utilities/check_tropomi_download.py $tropomiCache $downloadScript $StartDate $EndDate || download=$?
 
-    if [ $download != 0 ]; then
+    if [[ $download -ne 0 ]]; then
     	python $downloadScript $StartDate $EndDate $tropomiCache
 	else
 		echo "All required TROPOMI files have been downloaded."
