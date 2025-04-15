@@ -184,9 +184,9 @@ else
 
     if [[ $download -ne 0 ]]; then
     	python $downloadScript $StartDate $EndDate $tropomiCache
-	else
-		echo "All required TROPOMI files have been downloaded."
-	fi
+	  else
+		  echo "All required TROPOMI files have been downloaded."
+	  fi
 fi
 
 # Check to make sure there are no duplicate TROPOMI files (e.g., two files with the same orbit number but a different processor version)
