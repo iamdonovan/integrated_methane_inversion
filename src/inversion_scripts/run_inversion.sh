@@ -23,7 +23,7 @@ trap 'send_error $LINENO' ERR
 printf "\n=== PARSING CONFIG FILE ===\n"
 
 invPath={INVERSION_PATH}
-configFile=`realpath ${CONFIG_FILE}`
+configFile=`realpath {CONFIG_FILE}`
 
 # Get configuration
 #  This defines $StartDate, $EndDate, $nBufferClusters, $RunName, $isAWS
