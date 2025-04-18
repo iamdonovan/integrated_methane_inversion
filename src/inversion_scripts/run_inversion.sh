@@ -23,7 +23,7 @@ trap 'send_error $LINENO' ERR
 printf "\n=== PARSING CONFIG FILE ===\n"
 
 invPath={INVERSION_PATH}
-configFile={CONFIG_FILE}
+configFile=`realpath ${CONFIG_FILE}`
 
 # Get configuration
 #  This defines $StartDate, $EndDate, $nBufferClusters, $RunName, $isAWS
@@ -34,7 +34,7 @@ configFile={CONFIG_FILE}
 #  Make sure $PrecomputedJacobian is true, and then re-run this script
 #   (or run_imi.sh with only the $DoInversion module switched on in config.yml).
 
-eval $(python ${invPath}/src/utilities/parse_yaml.py ${invPath}/${configFile})
+eval $(python ${invPath}/src/utilities/parse_yaml.py ${configFile})
 
 #=======================================================================
 # Configuration (these settings generated on initial setup)
